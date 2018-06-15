@@ -1,0 +1,47 @@
+server:
+  port: 9091
+
+schedule:
+  cron: 0 0/5 * * * ?
+
+spring:
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/crawler?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
+    username: root
+    password: root
+    hikari:
+      maximum-pool-size: 20
+      minimum-idle: 5
+
+  jpa:
+    #在 SrpingBoot 2.0 版本中，Hibernate 创建数据表的时候，
+    #默认的数据库存储引擎选择的是 MyISAM （之前好像是 InnoDB，这点比较诡异）。
+    #这个参数是在建表的时候，将默认的存储引擎切换为 InnoDB 用的
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+    hibernate:
+      #update 表示当实体类的属性发生变化时，表结构跟着更新
+      #create 表示启动的时候删除上一次生成的表，并根据实体类重新生成表，这个时候之前表中的数据就会被清空；
+      #create-drop 表示启动时根据实体类生成表，但是当sessionFactory关闭的时候表会被删除；
+      #validate 表示启动时验证实体类和数据表是否一致；
+      #none 表示啥都不做
+      ddl-auto: update
+    #配置打印sql语句
+    show-sql: false
+
+  redis:
+    database: 0 #数据库索引
+    host: localhost #数据库服务器地址
+    port: 6397
+    password: #连接密码，默认为空
+    jedis:
+      pool:
+        max-active: 8 #最大连接数
+        max-wait: -1ms #连接池最大阻塞等待时间，负数表示没有限制
+        max-idle: 8 #连接池最大空闲连接数
+        min-idle: 0 #连接池最小空闲连接数
+    timeout: 0ms #连接超时最大时间
+  jackson:
+    serialization:
+      indent_output: true #表示格式化输出的json字符串

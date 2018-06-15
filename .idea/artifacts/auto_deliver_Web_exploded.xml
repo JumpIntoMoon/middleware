@@ -1,0 +1,13 @@
+<component name="ArtifactManager">
+  <artifact type="exploded-war" name="auto-deliver:Web exploded">
+    <output-path>$PROJECT_DIR$/out/artifacts/auto_deliver_Web_exploded</output-path>
+    <root id="root">
+      <element id="javaee-facet-resources" facet="auto-deliver/web/Web" />
+      <element id="directory" name="WEB-INF">
+        <element id="directory" name="classes">
+          <element id="module-output" name="auto-deliver" />
+        </element>
+      </element>
+    </root>
+  </artifact>
+</component>

@@ -1,0 +1,49 @@
+<html>
+<head>
+    <title>Upload File</title>
+</head>
+<body>
+<form id="file_form" action="${path}"
+      method="post" enctype="multipart/form-data" target="frameFile"
+      onsubmit="return check();">
+    <input value="file" id="file_input" onchange="change()"
+           style="width:260px;   height:30px;" type="file" value="选择文件" multiple/>
+    <input id="input" style="width:260pt;height:30pt;"/>
+    <input type="submit" value="上传"/>
+</form>
+<iframe id="frameFile" value="frameFile" style="display:none;"></iframe>
+<script type="text/javascript">
+    function check() {
+        var obj = document.getElementById('file_input');
+        var length = obj.files.length;
+        if (length === 0) {
+            alert('请选择文件');
+            return false;
+        } else {
+            for (var i = 0; i < length; i++) {
+                var fileName = obj.files[i].value;
+                var fileType = (fileName.substring(fileName
+                    .lastIndexOf(".") + 1, fileName.length))
+                    .toLowerCase();
+                if (fileType !== 'xls' && fileType !== 'xlsx') {
+                    alert('文件格式不正确，请上传excel文件！');
+                    return false;
+                }
+            }
+        }
+    }
+
+    function change() {
+        var obj = document.getElementById('file_input');
+        var length = obj.files.length;
+        var fileNames = '';
+        for (var i = 0; i < length; i++) {
+            var temp = obj.files[i].value;
+            fileNames += temp + ';';
+        }
+        fileNames = fileNames.substr(0, fileNames.lastIndexOf(';'));
+        document.getElementById('input').value = fileNames;
+    }
+</script>
+</body>
+</html>
